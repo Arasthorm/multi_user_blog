@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<link type="text/css" rel="stylesheet" href="/style/main.css"/>
+  <title>Blog</title>
+</head>
+<body>
+
+	<a href="/blog" class="main-title">
+    /Blog/
+  	</a>
+  
+  <div class="login-area">
+
+  {% if user == "" %}
+    
+      <a class="login-link" href="/blog/login">login</a>
+      |
+      <a class="login-link" href="/blog/signup">signup</a>
+    {% else %}
+      {{user}} (<a class="login-link" href="/blog/logout">logout</a>)
+
+    {% endif %}
+
+    
+    </div>
+  <form method="post">
+  	<div class="post">
+  		<div class="post-heading">
+    		<div class="post-title">
+      			{{post.subject}}
+    		</div>
+
+    		<div class="post-date">
+      			{{post.created.strftime("%b %d, %Y")}}
+    		</div>
+  				
+  			</div>
+  			 	
+  			 <div class="post-content">
+    			{% for line in post.content.splitlines() %}
+    				 {{line}}<br>
+    			{% endfor %}
+  			</div>
+
+            
+              {% if post.author == user%}
+                <hr>
+                <div class="accesories-area"> 
+                <a href="/blog/editpost/{{post_id}}" class="login-link"> edit </a> | 
+                <a href="/blog/deletepost/{{post_id}}" class="login-link"> delete </a>
+                </div>
+              {% endif %}
+
+              <br>
+
+              {% if user != "" %}
+                <textarea style="width: 500px; height: 150px;" name=comment></textarea>
+                <div class="error">{{error}}</div>
+                <br>
+                <input type="submit" value="Add comment" style="font-size: 18px;">
+
+                <br>
+                <br>
+                <br>
+                <br>
+              {% endif %}
+
+              <div class="post-content">
+
+              {% for c in comments%}
+                <div class="comment-date">
+                {{c.author}}
+                {{c.last_modified.strftime("%b %d, %Y")}}
+                </div>
+
+                <hr>
+               
+                  {% for line in c.comment.splitlines() %}
+                      {{line}}<br>
+                  {% endfor %}
+                <hr> 
+              
+                {% if c.author == user %}
+                  <div class="accesories-area">
+                   
+                  <a href=/blog/editcomment/{{post_id}}?c_ID={{c.key().id()}} class="login-link"> edit </a> | 
+                  <a href=/blog/deletecomment/{{post_id}}?c_ID={{c.key().id()}} class="login-link"> delete </a>
+                  </div>
+                  
+                {% endif %}
+
+                <br>
+              {% endfor %}
+              </div>
+        
+	</div>
+</form>
+
+</body>
+</html>

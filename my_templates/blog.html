@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="/style/main.css"/>
+
+  <title>Blog</title>
+</head>
+
+<body>
+
+	<a href="/blog" class="main-title">
+    /Blog/
+  	</a>
+	
+
+	<div class="login-area">
+
+	{% if user == "" %}
+    
+      <a class="login-link" href="/blog/login">login</a>
+      |
+      <a class="login-link" href="/blog/signup">signup</a>
+    {% else %}
+    	{{user}} (<a class="login-link" href="/blog/logout">logout</a>)
+
+    {% endif %}
+
+   <form method="post">
+    </div>
+
+  {% if user != "" %}
+    <br>    
+    <br>     
+    <br>
+	   <a href="/blog/newpost" class="add-link">  
+    
+    <div href="/blog/newpost" class="add-post"></div>
+       <h3 >Add a new post !</h3>
+     </a> 
+    <br>    
+    <br>    
+  {% endif %}
+
+    	{%  for x in range(0,n)  %}
+    	
+    		<div class="post">
+  				<div class="post-heading">
+          {% if user != "" %}
+  				  <a href="/blog?post_id={{last_posts_ids[x]}}" class="arrow-up"></a>
+          {% else %}
+            <a href="/blog/signup" class="arrow-up"></a>
+          {% endif %}
+
+    				<a href="/blog/{{last_posts_ids[x]}}" class="post-title">
+						{{posts[x].subject}}
+    				</a>
+
+    			<div class="post-date">
+      				{{posts[x].created.strftime("%b %d, %Y")}}
+    			</div>
+  				
+  				</div>
+  				
+  				<div class="accesories-area" style="left: 10px">
+  				<a class="login-link"> {{posts[x].num_likes}} upvotes </a> | 
+  				<a class="login-link"> {{num_comments[x]}} comments </a>
+
+          ({{posts[x].author}})
+  				</div>
+
+  				<br>
+
+			</div>
+
+    	{% endfor %}
+</form>
+</body>
+
+
+</html>

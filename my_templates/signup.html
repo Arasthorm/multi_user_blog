@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/style/main.css"/>
+    <title>Sign Up</title>
+  </head>
+
+  <body>
+
+    <a href="/blog" class="main-title">
+    /Blog/
+    </a>
+
+    <h2>Signup</h2>
+    <form method="post">
+      <table>
+        <tr>
+          <td class="label">
+            Username
+          </td>
+          <td>
+            <input type="text" name="username" value="">
+          </td>
+          <td class="error">
+              {{error_username}}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">
+            Password
+          </td>
+          <td>
+            <input type="password" name="password" value="">
+          </td>
+          <td class="error">
+              {{error_password}}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">
+            Verify Password
+          </td>
+          <td>
+            <input type="password" name="verify" value="">
+          </td>
+          <td class="error">
+              {{error_valid}}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">
+          Email(optional)
+          </td>
+          <td>
+            <input type="text" name="email" value="">
+          </td>
+          <td class="error">
+              {{error_email}}
+          </td>
+        </tr>
+      </table>
+
+      <input type="submit">
+    </form>
+
+    <br>
+    <br>
+    <br>
+
+    Already have an account?
+
+    <br>
+    <br>
+
+    <a href="/blog/login" class="login-link" >Login here!</a>
+
+  </body>
+
+</html>

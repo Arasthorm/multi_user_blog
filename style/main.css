@@ -1,0 +1,190 @@
+body {
+    position: relative;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+
+    width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    color: #333;
+}
+
+.login-area {
+    font-size: 13px;
+    color: gray;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.login-link {
+    color: gray;
+    text-decoration: none;
+}
+
+.login-link:visited {
+    color: gray;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.add-link {
+    color: #333;
+    text-decoration: none;
+}
+
+
+.add-link:visited {
+    color: #333;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+h3 {
+    position: relative;
+    left: 330px;
+}
+
+.error {
+    color: red;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+}
+
+label + label {
+    margin-top: 20px;
+}
+
+input[type=text] {
+    width: 500px;
+    font-size: 20px;
+    padding: 2px;
+    font-family: monospace;
+}
+
+input[type=password] {
+    width: 500px;
+    font-size: 20px;    
+    padding: 2px;
+}
+
+textarea {
+  width: 500px;
+  height: 400px;
+  font-size: 17px;
+  font-family: monospace;
+}
+
+input[type=submit] {
+  font-size: 24px;
+}
+
+input[type=button] {
+  font-size: 24px;
+}
+
+.main-title {
+    display: block;
+    color: #222;
+    font-size: 45px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-decoration: none;
+}
+
+.post + .post {
+    margin-top: 15px;
+}
+
+.post-heading {
+    position: relative;
+    border-bottom: 3px solid #666;
+}
+
+.post-title {
+    font-size: 24px;
+    font-weight: bold;
+
+    text-decoration: none;
+    color: #333;
+}
+
+.post-title:visited {
+    color: #333;
+}
+
+.post-date {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    color: #999;
+
+}
+
+.post-content {
+    margin-top: 5px;
+}
+
+.age {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    color: gray;
+    font-size: 12px;
+}
+
+.accesories {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    color: #999;
+}
+
+.accesories-area {
+    font-size: 13px;
+    color: gray;
+    position: absolute;
+    right: 10px;
+}
+
+.comment-date {
+    color: #999;
+    font-size: 11px;
+}
+
+.likesymbol {
+  width: 50px;
+  height:50px;
+  border: 0px;
+  margin: 3px 2px 6px;
+  no-repeat;
+}
+
+.arrow-up {
+  position: relative; 
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid black;
+  margin: 3px 2px 6px;
+  bottom: 13px;
+}
+
+.add-post {
+  position: relative;
+  width: 128px;
+  height:128px;
+  background-image: url(https://image.freepik.com/free-icon/add-circular-button-outline-with-plus-sign_318-70654.png);
+  left: 330px;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="/style/main.css"/>
+	<title>Blog</title>
+</head>
+<body>
+
+	<a href="/blog" class="main-title">
+    /Blog/
+  	</a>	
+
+
+    <div class="login-area">
+
+    {% if user == "" %}
+    
+      <a class="login-link" href="/blog/login">login</a>
+      |
+      <a class="login-link" href="/blog/signup">signup</a>
+    {% else %}
+        {{user}} (<a class="login-link" href="/blog/logout">logout</a>)
+
+    {% endif %}
+
+    
+    </div>
+
+
+	<h2>{{type_post}}</h2>
+
+	<form method="post">
+    	<label>
+    			<div> subject </div>
+    			<input type="text" name="subject", value= "{{subject}}">
+    	</label>
+    	<label>
+    			<div> blog </div>    			
+                <textarea name="content">{{content}}</textarea>
+    	</label>
+
+    	<div class="error">{{error}}</div>
+    	<input type="submit">
+
+        {% if type_post == "Edit Post"%}
+            <input type="button" onclick="parent.location='/blog/{{post_id}}'" value="Cancel">
+        {% else %}
+            <input type="button" onclick="parent.location='/blog'" value="Cancel">
+        {% endif %}
+    </form>
+
+
+</body>
+</html>
