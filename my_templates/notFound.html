@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <link type="text/css" rel="stylesheet" href="/style/main.css"/>
+    <title>NotFound</title>
+  </head>
+
+  <body>
+    <a href="/blog" class="main-title">
+    /Blog/
+    </a>
+    <h2>Page not found :( </h2>
+
+      <div class="login-area">
+
+  {% if user == "" %}
+    
+      <a class="login-link" href="/blog/login">login</a>
+      |
+      <a class="login-link" href="/blog/signup">signup</a>
+    {% else %}
+      {{user}} (<a class="login-link" href="/blog/logout">logout</a>)
+
+    {% endif %}
+    </div>
+
+    
+
+
+  </body>
+
+</html>

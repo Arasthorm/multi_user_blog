@@ -12,6 +12,19 @@ def hash_str(s):
 
 
 def make_secure_val(s):
+
+    """
+    Hashes the value of the cookie in order to check for tampering
+
+    Args:
+        s : value to be hashed
+
+    Returns:
+            a string composed by the original value and the hmac of the value + some secret
+
+    """
+
+
     return "%s|%s" % (s, hash_str(s))
 
 
@@ -26,6 +39,21 @@ def make_salt(n):
 
 
 def secure_pass(name, password, n):
+
+    """
+    Enables a more secure password storing
+
+    Args:
+        name : The username provided
+        password : The password provided
+        n : An integer that defines the size of the salt
+
+    Returns:
+            A hash using sha256 of name + password + salt
+
+    """
+
+
     salt = make_salt(n)
     h = hashlib.sha256(name+password+salt).hexdigest()
     return "%s|%s" % (h, salt)
@@ -45,7 +73,7 @@ def read_secure_cookie(self):
     username_cookies_str = self.request.cookies.get('user_id')
 
     if username_cookies_str and not username_cookies_str == "" and not username_cookies_str == None:
-        print username_cookies_str
+        
         cookie_val = check_secure_val(username_cookies_str)
         if cookie_val:
             user_id = cookie_val
@@ -56,6 +84,14 @@ def read_secure_cookie(self):
 
 
 def set_secure_cookie(self, user_id):
+
+    """
+    Defines a cookie with the field user_id as the id generated to the current user
+
+    Args:
+        user_id : Id generated to the current user
+
+    """
 
     new_cookie_val = make_secure_val(user_id)
     self.response.headers.add_header(

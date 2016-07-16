@@ -45,6 +45,19 @@ class Post(db.Model):
 
     @classmethod
     def check_author_post(cls, author, post_id):
+
+        """
+        Compares the current user logged with the author of the post
+
+        Args:
+            author : The author of the post
+            post_id : Id of the post
+
+        Returns:
+                A boolean depending if the username is the same as the author 
+
+        """
+
         post = Post.get_by_id(int(post_id))
         return True if post.author == author else False
 

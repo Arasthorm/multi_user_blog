@@ -29,7 +29,7 @@ class Handler(webapp2.RequestHandler):
         return t.render(params)
 
     def render(self, template, **params):
-        self.write(self.render_str(template, **params))
+        self.write(self.render_str(template, **params))   # renders an html page with different parameters 
 
 
 class SignupHandler(Handler):
@@ -38,6 +38,11 @@ class SignupHandler(Handler):
         self.render("signup.html")
 
     def post(self):
+
+    	"""
+    	Executed by pressing the submit button, where all the fields for the registration are verified. 
+    	If successful the user is redirected to the welcome page 
+    	"""
 
         have_error = False
 
@@ -130,40 +135,52 @@ class WelcomeHandler(Handler):
 
 
 class BlogHandler(Handler):
+	
+	"""
+	Handler for route /blog, that inherts from Handler
+				
+	"""
 
-    def get(self):
-        # self.response.headers['Content-Type']='text/plain')
-        n = 0
-        last_posts_ids = []
-        last_posts = []
-        num_comments = []
+	def get(self):
 
-        posts = d_func.Post.get_all_posts_cronologically()
-        curr_user = d_func.Credentials.get_username_by_ID(
+		"""
+		Gets the main page of the blog that lists all posts titles and demonstrates 
+		the number of upvotes and comments for a certain post.
+
+		Args:
+			self : corresponds to the class which allows invoking methods from the classes that it inherts 
+		"""
+		n = 0
+		last_posts_ids = []
+		last_posts = []
+		num_comments = []
+
+		posts = d_func.Post.get_all_posts_cronologically()
+		curr_user = d_func.Credentials.get_username_by_ID(
             s_func.read_secure_cookie(self))
 
-        for post in posts:
+		for post in posts:
 
-            last_posts.append(post)
-            ID = str(post.key().id())
-            last_posts_ids.append(ID)
-            num_comments.append(
+			last_posts.append(post)
+			ID = str(post.key().id())
+			last_posts_ids.append(ID)
+			num_comments.append(
                 d_func.Comment.get_all_post_comments(ID).count())
 
-        post_id = self.request.get("post_id")
-        if post_id:
+		post_id = self.request.get("post_id")
+		if post_id:
 
-            users_liked_post = d_func.Like.get_users_liked_post(post_id)
-            if not curr_user in users_liked_post and not d_func.Post.check_author_post(curr_user, post_id):
+			users_liked_post = d_func.Like.get_users_liked_post(post_id)
+			if not curr_user in users_liked_post and not d_func.Post.check_author_post(curr_user, post_id):
 
-                post = d_func.Post.get_post(post_id)
-                post.num_likes = str(int(post.num_likes) + 1)
+				post = d_func.Post.get_post(post_id)
+				post.num_likes = str(int(post.num_likes) + 1)
 
-                post.put()
-                like = d_func.Like.add_like(post_id, curr_user)
-                like.put()
+				post.put()
+				like = d_func.Like.add_like(post_id, curr_user)
+				like.put()
 
-        self.render("blog.html", user=curr_user, posts=last_posts, last_posts_ids=last_posts_ids, n=len(last_posts),
+		self.render("blog.html", user=curr_user, posts=last_posts, last_posts_ids=last_posts_ids, n=len(last_posts),
                     num_comments=num_comments)
 
 
@@ -179,7 +196,12 @@ class NewPostHandler(Handler):
 
 	def post(self):
 
-		print "Posting ?"
+
+		"""
+		Originates new post if user is logged in and if there is subject and content
+
+		"""
+
 		subject = self.request.get("subject")
 		content = self.request.get("content")
 		author = d_func.Credentials.get_username_by_ID(
@@ -204,12 +226,13 @@ class Posted(Handler):
 		curr_user = d_func.Credentials.get_username_by_ID(
             s_func.read_secure_cookie(self))
 		post = d_func.Post.get_post(post_id)
-		comments = d_func.Comment.get_all_post_comments(post_id)
-		author_post = d_func.Post.get_author_post(post_id)
 
 		if not post:
-			self.error(404)
+			self.render("notFound.html",user=curr_user)
 			return
+
+		comments = d_func.Comment.get_all_post_comments(post_id)
+		author_post = d_func.Post.get_author_post(post_id)
 		self.render("posted.html", user=curr_user, post=post,
                     post_id=post_id, author_post=author_post, comments=comments)
 
@@ -254,13 +277,23 @@ class EditPostHandler(Handler):
 			self.redirect("/blog")
 
 	def post(self, post_id):
+
+		'''
+		Method to edit a certain post, only accessible to users that wrote that post. 
+		Requires a subject and content to be successfuly stored in the database.
+
+		Args:
+			self : corresponds to the class which allows invoking methods from the classes that it inherts 
+			post_id : Id of the post, used to track the post in the database and update the subject and content 
+		'''
+
 		curr_user = d_func.Credentials.get_username_by_ID(
             s_func.read_secure_cookie(self))
 		subject = self.request.get("subject")
 		content = self.request.get("content")
 
 		if d_func.Post.check_author_post(curr_user, post_id):
-			if subject and content:
+			if subject and content:                                   
 
 				post = d_func.Post.get_post(post_id)
 				post.subject = subject
@@ -307,7 +340,7 @@ class EditCommentHandler(Handler):
 
 	def get(self, post_id):
 
-		c_id = self.request.get("c_ID")
+		c_id = self.request.get("c_ID")    #To edit a comment, the comment id is provided in the url
 		comment = d_func.Comment.get_comment_byID(c_id)
 		curr_user = d_func.Credentials.get_username_by_ID(
             s_func.read_secure_cookie(self))
@@ -342,7 +375,7 @@ class DeleteCommentHandler(Handler):
 
 	def get(self, post_id):
 
-		c_id = self.request.get("c_ID")
+		c_id = self.request.get("c_ID")                 # The ID for the comment is received through the url
 		comment = d_func.Comment.get_comment_byID(c_id)
 		curr_user = d_func.Credentials.get_username_by_ID(
             s_func.read_secure_cookie(self))
