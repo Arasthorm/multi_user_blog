@@ -11,7 +11,7 @@ class Credentials(db.Model):
 
     @classmethod
     def get_username_by_ID(cls, user_id):
-        if not user_id == "":
+        if user_id  and not user_id == "" :
             username = cls.get_by_id(int(user_id)).username
             return username
         else:
